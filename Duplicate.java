@@ -7,22 +7,22 @@ class Duplicate {
     int i=0, k=0, j=0;
     int len=userName.length();
     char[] ch = new char[len];
-    char[] cn = new char[len];
-    int[] cnt = new int[len];
+    char[] chnew = new char[len];
     for(i=0; i<len; i++) {
     	ch[i]=userName.charAt(i);
     }
     for(i=0; i<len; i++) {
-    	for(k=i; k<len; k++) {
-    		//if(ch[i]) {
-    			if(ch[i]==ch[k]) {
-    				cnt[i]++;
-    			}
-    		//}
+    	for(k=0; k<i; k++) {
+    		if(ch[i]==ch[k]) {
+    			break;
+    		}
+    	}
+    	if(k==i) {
+    		chnew[j++]=ch[i];
     	}
     }
     for(i=0; i<len; i++) {
-    	System.out.println(cn[i]);  // Output user input
-    }  
+    	System.out.print(chnew[i]);  // Output user input
+    }
   }
 }
