@@ -15,16 +15,20 @@ class Occurrence {
     }
     for(i=0; i<len; i++) {
     	for(k=0; k<len; k++) {
-    		if(ch[i]==ch[k]) {
-    			for(j=0; j<len; j++) {
-    				
-    				cnt[i]++;
-    			}		
+    		if(ch[i]==ch[k]) {    				
+    				cnt[i]++;		
     		}
     	}
     }
     for(i=0; i<len; i++) {
-    	System.out.println("Letter: "+ch[i]+", Occurrence: "+cnt[i]);  // Output user input
-    }  
+    	for(k=0; k<i; k++) {
+    		if(ch[i]==ch[k]) {
+    			break;
+    		}   		
+    	}
+    	if(k==i) {
+    		System.out.println("Letter: "+ch[i]+", Occurrence: "+cnt[i]);
+    	}
+    } 
   }
 }
