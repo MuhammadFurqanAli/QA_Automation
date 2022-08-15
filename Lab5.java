@@ -47,6 +47,12 @@ public class Lab5 {
 		ta2.clear();
 		ta2.sendKeys("I am an Electrical Engineer ;)");
 
+		// Upload File
+		ta2 = driver.findElement(By.xpath("//input[@id='uploadfile']"));
+		js.executeScript("arguments[0].scrollIntoView();", ta2);
+		driver.findElement(By.xpath("//input[@id='uploadfile']"))
+				.sendKeys("C:\\Users\\4123\\Desktop\\QA Automation\\eclipse-workspace\\TEST_0\\src\\Lab5.java");
+
 		// Step-2
 		//
 		WebElement tab1 = driver.findElement(By.xpath("//table[@id='table1']"));
@@ -56,7 +62,7 @@ public class Lab5 {
 
 		for (WebElement ele : t1el) {
 			t1 = ele.getText();
-			System.out.println("Table Has Following Contents: "+ t1);
+			System.out.println("Table Has Following Contents: " + t1);
 		}
 
 		/*
@@ -322,12 +328,19 @@ public class Lab5 {
 
 		// Filled text boxes below
 		driver.findElement(By.xpath("//input[@name='textboxn']")).sendKeys("Dummy Text");
-		
-		//h2[text()='element having same class name of above field']//following-sibling::div[@class='widget-content']//child::input
-		driver.findElement(By.xpath("//h2[text()='Locate using class']//following-sibling::div[@class='widget-content']//child::input")).sendKeys("Dummy Data 1");
-		driver.findElement(By.xpath("//h2[text()='element having same class name of above field']//following-sibling::div[@class='widget-content']//child::input")).sendKeys("Dummy Data 2");
-		//driver.findElement(By.xpath("//div[@id='HTML24']//input[@class='classone']")).sendKeys("Dummy Data 1");
-		//driver.findElement(By.xpath("//div[@id='HTML28']//input[@class='classone']")).sendKeys("Dummy Data 2");
+
+		// h2[text()='element having same class name of above
+		// field']//following-sibling::div[@class='widget-content']//child::input
+		driver.findElement(By.xpath(
+				"//h2[text()='Locate using class']//following-sibling::div[@class='widget-content']//child::input"))
+				.sendKeys("Dummy Data 1");
+		driver.findElement(By.xpath(
+				"//h2[text()='element having same class name of above field']//following-sibling::div[@class='widget-content']//child::input"))
+				.sendKeys("Dummy Data 2");
+		// driver.findElement(By.xpath("//div[@id='HTML24']//input[@class='classone']")).sendKeys("Dummy
+		// Data 1");
+		// driver.findElement(By.xpath("//div[@id='HTML28']//input[@class='classone']")).sendKeys("Dummy
+		// Data 2");
 
 		// Clicked Car Radio Button
 		elementLocator = driver.findElement(By.xpath("//input[@value='Car']"));
