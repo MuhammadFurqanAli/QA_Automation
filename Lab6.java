@@ -19,8 +19,8 @@ public class Lab6 {
 	public static void main(String[] args) throws InterruptedException {
 
 		// Gave Location of Chrome Web Driver
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
-
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe"); 
+		//System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
 		// Create New WebDriver and maximize it
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -100,7 +100,34 @@ public class Lab6 {
 		elementLocator = driver.findElement(By.xpath("//button[@type='submit']"));
 		actions.click(elementLocator).perform();
 		
+		elementLocator = driver.findElement(By.xpath("//button[@ng-click='transactions()']"));
+		actions.click(elementLocator).perform();
 		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='start']")));
+		driver.findElement(By.xpath("//input[@id='start']")).sendKeys("2022-08-15T21:33:44");
+		driver.findElement(By.xpath("//input[@id='end']")).sendKeys("2022-08-15T22:03:44");
+		
+		elementLocator = driver.findElement(By.xpath("//button[@ng-click='reset()']"));
+		actions.click(elementLocator).perform();
+		
+		elementLocator = driver.findElement(By.xpath("//button[@class='btn logout']"));
+		actions.click(elementLocator).perform();
+		
+		elementLocator = driver.findElement(By.xpath("//button[@class='btn home']"));
+		actions.click(elementLocator).perform();
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='manager()']")));
+		elementLocator = driver.findElement(By.xpath("//button[@ng-click='manager()']"));
+		actions.click(elementLocator).perform();
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='showCust()']")));
+		elementLocator = driver.findElement(By.xpath("//button[@ng-click='showCust()']"));
+		actions.click(elementLocator).perform();
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='deleteCust(cust)']")));
+		driver.findElement(By.xpath("//input[starts-with(@class,'form-control')]")).sendKeys("Ron");
+		elementLocator = driver.findElement(By.xpath("//button[@ng-click='deleteCust(cust)']"));
+		actions.click(elementLocator).perform();
 		
 		
 	}
