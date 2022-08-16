@@ -1,7 +1,6 @@
 package Lab6TestNG;
 
 import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,149 +8,150 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Lab6 {
-    @BeforeTest
+	public String baseurl = "https://www.globalsqa.com/angularJs-protractor/BankingProject";
+	public WebDriver driver; 
+	public Actions actions;
+	public WebDriverWait wait;
+	
+	@BeforeTest
     public void openWebPage() {
-    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
+    	System.setProperty("webdriver.chrome.driver", "C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe");
+    	//System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
 		// Create New WebDriver and maximize it
-		WebDriver driver = new ChromeDriver();
+		driver = new ChromeDriver();
 		driver.manage().window().maximize();
-
-		// DEFINING URL TO GO TO and Then Called Driver to Go There
-		String baseurl = "https://www.globalsqa.com/angularJs-protractor/BankingProject";
 		driver.get(baseurl);
+		
+		//Create Actions & Wait Objects
+		actions = new Actions(driver);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		
+
     }
 	@Test
 	public void Manager() {
-
-		// Gave Location of Chrome Web Driver
-		// System.setProperty("webdriver.chrome.driver",
-		// "C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe");
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
-		// Create New WebDriver and maximize it
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-
-		// DEFINING URL TO GO TO and Then Called Driver to Go There
-		String baseurl = "https://www.globalsqa.com/angularJs-protractor/BankingProject";
-		driver.get(baseurl);
-
-		Actions actions = new Actions(driver);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-
+		
 		// Hit Manager Button After Wait
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='manager()']")));
-		WebElement elementLocator = driver.findElement(By.xpath("//button[@ng-click='manager()']"));
-		actions.click(elementLocator).perform();
+		WebElement managerButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='manager()']")));
+		actions.click(managerButton).perform();
+		
+		// Hit Add Customer After Wait
+		WebElement addCustomer = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='addCust()']")));
+		actions.click(addCustomer).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='addCust()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='addCust()']"));
-		actions.click(elementLocator).perform();
-
-		// Add Customer Details
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@ng-model='fName']")));
-		driver.findElement(By.xpath("//input[@ng-model='fName']")).sendKeys("Malik");
-		driver.findElement(By.xpath("//input[@ng-model='lName']")).sendKeys("Ajay");
-		driver.findElement(By.xpath("//input[@ng-model='postCd']")).sendKeys("4123");
-		elementLocator = driver.findElement(By.xpath("//button[@class='btn btn-default']"));
-		actions.click(elementLocator).perform();
+		// Add Customer Details and Handle Alert
+		WebElement fName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@ng-model='fName']")));
+		fName.sendKeys("Malik");
+		WebElement lName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@ng-model='lName']")));
+		lName.sendKeys("Ajay");
+		WebElement postCode = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@ng-model='postCd']")));
+		postCode.sendKeys("4123");
+		WebElement addCustBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@class='btn btn-default']")));
+		actions.click(addCustBut).perform();
 		driver.switchTo().alert().accept();
 
-		// Hit Manager Button After Wait
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='openAccount()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='openAccount()']"));
-		actions.click(elementLocator).perform();
+		// Hit Open Account 
+		WebElement openAcc= driver.findElement(By.xpath("//button[@ng-click='openAccount()']"));
+		actions.click(openAcc).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='userSelect']")));
-		elementLocator = driver.findElement(By.xpath("//select[@id='userSelect']"));
-		actions.clickAndHold(elementLocator).perform();
+		WebElement userSelect= wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='userSelect']")));
+		actions.clickAndHold(userSelect).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Ron Weasly']")));
-		driver.findElement(By.xpath("//option[text()='Ron Weasly']")).click();
+		WebElement textName= wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Malik Ajay']")));
+		textName.click();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='currency']")));
-		elementLocator = driver.findElement(By.xpath("//select[@id='currency']"));
-		actions.clickAndHold(elementLocator).perform();
+		WebElement currency = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='currency']")));
+		actions.clickAndHold(currency).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Ron Weasly']")));
-		driver.findElement(By.xpath("//option[text()='Pound']")).click();
+		WebElement pound = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Pound']")));
+		pound.click();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
-		elementLocator = driver.findElement(By.xpath("//button[@type='submit']"));
-		actions.click(elementLocator).perform();
+		WebElement submitBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+		actions.click(submitBut).perform();
 		driver.switchTo().alert().accept();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='home()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='home()']"));
-		actions.click(elementLocator).perform();
+		WebElement homeBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='home()']")));
+		actions.click(homeBut).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='customer()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='customer()']"));
-		actions.click(elementLocator).perform();
+		WebElement customerBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='customer()']")));
+		actions.click(customerBut).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='userSelect']")));
-		elementLocator = driver.findElement(By.xpath("//select[@id='userSelect']"));
-		actions.clickAndHold(elementLocator).perform();
+		userSelect = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='userSelect']")));
+		actions.clickAndHold(userSelect).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Ron Weasly']")));
-		driver.findElement(By.xpath("//option[text()='Ron Weasly']")).click();
+		textName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[text()='Malik Ajay']")));
+		textName.click();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
-		elementLocator = driver.findElement(By.xpath("//button[@type='submit']"));
-		actions.click(elementLocator).perform();
+		submitBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+		actions.click(submitBut).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='deposit()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='deposit()']"));
-		actions.click(elementLocator).perform();
+		WebElement depositBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='deposit()']")));
+		actions.click(depositBut).perform();
 
-		wait.until(
-				ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[starts-with(@class,'form-control')]")));
-		driver.findElement(By.xpath("//input[starts-with(@class,'form-control')]")).sendKeys("5000");
+		WebElement amount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[starts-with(@class,'form-control')]")));
+		amount.sendKeys("10000");
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
-		elementLocator = driver.findElement(By.xpath("//button[@type='submit']"));
-		actions.click(elementLocator).perform();
+		submitBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+		actions.click(submitBut).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-class='btnClass3']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-class='btnClass3']"));
-		actions.click(elementLocator).perform();
+		
+		WebElement withdrawlBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='withdrawl()']")));
+		withdrawlBut.click();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Withdraw']")));
-		driver.findElement(By.xpath("//input[@type='number']")).sendKeys("2000");
-		elementLocator = driver.findElement(By.xpath("//button[@type='submit']"));
-		actions.click(elementLocator).perform();
+		WebElement amountW = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[text()='Amount to be Withdrawn :']//following::input")));
+		//amount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[starts-with(@class,'form-control')]")));
+		amountW.sendKeys("2000");
+		
+		//WebElement withdrawAmount = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()='Withdraw']")));
+		WebElement withdrawAmount = driver.findElement(By.xpath("//button[text()='Withdraw']"));
+		actions.click(withdrawAmount).perform();
 
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='transactions()']"));
-		actions.click(elementLocator).perform();
+		WebElement transactionsbut  = driver.findElement(By.xpath("//button[@ng-click='transactions()']"));
+		actions.click(transactionsbut).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='start']")));
-		driver.findElement(By.xpath("//input[@id='start']")).sendKeys("2022-08-15T21:33:44");
-		driver.findElement(By.xpath("//input[@id='end']")).sendKeys("2022-08-15T22:03:44");
+		WebElement startDateTime = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='start']")));
+		startDateTime.sendKeys("2022-08-15T21:33:44");
+		WebElement endDateTime = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='start']")));
+		endDateTime.sendKeys("2022-08-17T21:33:44");
+		
+		
+		WebElement resetBut = driver.findElement(By.xpath("//button[@ng-click='reset()']"));
+		actions.click(resetBut).perform();
 
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='reset()']"));
-		actions.click(elementLocator).perform();
+		WebElement logoutBut = driver.findElement(By.xpath("//button[@class='btn logout']"));
+		actions.click(logoutBut).perform();
 
-		elementLocator = driver.findElement(By.xpath("//button[@class='btn logout']"));
-		actions.click(elementLocator).perform();
+		homeBut = driver.findElement(By.xpath("//button[@class='btn home']"));
+		actions.click(homeBut).perform();
 
-		elementLocator = driver.findElement(By.xpath("//button[@class='btn home']"));
-		actions.click(elementLocator).perform();
+		managerButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='manager()']")));
+		actions.click(managerButton).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='manager()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='manager()']"));
-		actions.click(elementLocator).perform();
+		WebElement showCust = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='showCust()']")));
+		actions.click(showCust).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='showCust()']")));
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='showCust()']"));
-		actions.click(elementLocator).perform();
+		
+		WebElement delCust = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[starts-with(@class,'form-control')]")));
+		delCust.sendKeys("Malik");
+		
+		WebElement delCustBut = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='deleteCust(cust)']")));
+		actions.click(delCustBut).perform();
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='deleteCust(cust)']")));
-		driver.findElement(By.xpath("//input[starts-with(@class,'form-control')]")).sendKeys("Ron");
-		elementLocator = driver.findElement(By.xpath("//button[@ng-click='deleteCust(cust)']"));
-		actions.click(elementLocator).perform();
-
+		//delCust = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[starts-with(@class,'form-control')]")));
+		//delCust.clear();
+		
+		//homeBut = driver.findElement(By.xpath("//button[@class='btn home']"));
+		//actions.click(homeBut).perform();
 	}
+	@AfterTest
+	public void quitDriver() {
+		
+		driver.quit();
+	}
+	
 }
