@@ -1,26 +1,23 @@
+package Lab6TestNG;
+
+import java.time.Duration;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.lang.Thread;
-import java.time.Duration;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import org.testng.annotations.Test;
 
 public class Lab6 {
-
-	public static void main(String[] args) throws InterruptedException {
+  @Test
+  public void f() {
 
 		// Gave Location of Chrome Web Driver
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe"); 
-		//System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver", "C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe"); 
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\4123\\Downloads\\chromedriver.exe");
 		// Create New WebDriver and maximize it
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -36,6 +33,22 @@ public class Lab6 {
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='manager()']")));
 		WebElement elementLocator = driver.findElement(By.xpath("//button[@ng-click='manager()']"));
 		actions.click(elementLocator).perform();
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='addCust()']")));
+		elementLocator = driver.findElement(By.xpath("//button[@ng-click='addCust()']"));
+		actions.click(elementLocator).perform();
+		
+		//Add Customer Details 
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@ng-model='fName']")));
+		driver.findElement(By.xpath("//input[@ng-model='fName']")).sendKeys("Malik");
+		driver.findElement(By.xpath("//input[@ng-model='lName']")).sendKeys("Ajay");
+		driver.findElement(By.xpath("//input[@ng-model='postCd']")).sendKeys("4123");
+		elementLocator = driver.findElement(By.xpath("//button[@class='btn btn-default']"));
+		actions.click(elementLocator).perform();
+		driver.switchTo().alert().accept();
+		
+		
+		
 		
 		// Hit Manager Button After Wait
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@ng-click='openAccount()']")));
@@ -130,6 +143,6 @@ public class Lab6 {
 		actions.click(elementLocator).perform();
 		
 		
-	}
 
+  }
 }
