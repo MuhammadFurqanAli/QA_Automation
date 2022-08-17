@@ -31,7 +31,7 @@ public class Lab6 {
 	}
 
 	@BeforeMethod
-	public void GetURL() {
+	public void GetURLInitObjects() {
 
 		// Create New WebDriver and maximize it
 		driver = new ChromeDriver();
