@@ -9,9 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -20,16 +19,26 @@ public class Lab6 {
 	public WebDriver driver;
 	public Actions actions;
 	public WebDriverWait wait;
+	public String actual = "", expected = "";
 
 	@BeforeTest
 	public void GetDriverAdress() {
-		System.setProperty("webdriver.chrome.driver",
-				"C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe");
-		// System.setProperty("webdriver.chrome.driver",
-		// "C:\\Users\\4123\\Downloads\\chromedriver.exe");
+		///System.setProperty("webdriver.chrome.driver",
+			//	"C:\\Users\\ACER\\Desktop\\CureMD\\QA_Automation\\Java\\chromedriver.exe");
+		 System.setProperty("webdriver.chrome.driver",
+		 "C:\\Users\\4123\\Downloads\\chromedriver.exe");
+		// Create New WebDriver and maximize it
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+			driver.get(baseurl);
+
+			// Create Actions & Wait Objects
+			actions = new Actions(driver);
+			wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
 	}
 
+	/*
 	@BeforeMethod
 	public void GetURLInitObjects() {
 
@@ -40,7 +49,7 @@ public class Lab6 {
 
 		// Create Actions & Wait Objects
 		actions = new Actions(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
 	}
 
@@ -49,7 +58,12 @@ public class Lab6 {
 		driver.close();
 		;
 	}
-
+*/
+	
+	
+	
+	
+	
 	// Quick Access Functions Are Listed Below 
 	public void ActionsClick(WebElement elem) {
 		actions.click(elem).perform();
@@ -79,6 +93,13 @@ public class Lab6 {
 		ActionsClick(submitBut);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	//Test Cases Start Here
 	@Test(priority = 0)
 	public void ManagerAddCustomer() {
@@ -86,7 +107,7 @@ public class Lab6 {
 		// Hit Manager Button To Login After Wait
 		WebElement managerButton = WaitXpath("//button[@ng-click='manager()']");
 		ActionsClick(managerButton);
-
+		
 		// Hit Add Customer After Wait
 		WebElement addCustomer = WaitXpath("//button[@ng-click='addCust()']");
 		ActionsClick(addCustomer);
@@ -100,13 +121,18 @@ public class Lab6 {
 		postCode.sendKeys("4123");
 		WebElement addCustBut = WaitXpath("//button[@class='btn btn-default']");
 		ActionsClick(addCustBut);
-		AlertAccept();
+		
+		actual = driver.switchTo().alert().getText();
+		expected = "Customer added successfully with customer id :6";
+				AlertAccept();
+		Assert.assertEquals(actual, expected,"Add Customer Insuccessful.");
+		
 	}
-
+	
 	@Test(priority = 1)
 	public void OpenCustomerAccount() {
 
-		ManagerAddCustomer();
+		//ManagerAddCustomer();
 
 		// Hit Open Account
 		WebElement openAcc = WaitXpath("//button[@ng-click='openAccount()']");
@@ -125,12 +151,16 @@ public class Lab6 {
 		pound.click();
 
 		SubmitButtonClick();
-		AlertAccept();
+		actual = driver.switchTo().alert().getText();
+		expected = "Account created successfully with account Number :1016";
+				AlertAccept();
+		Assert.assertEquals(actual, expected,"Add Customer Insuccessful.");
+		
 	}
 
 	@Test(priority = 2)
 	public void GoToCustomerLogin() {
-		OpenCustomerAccount();
+		//OpenCustomerAccount();
 
 		HomeButtonClick();
 
@@ -144,12 +174,18 @@ public class Lab6 {
 		textName.click();
 
 		SubmitButtonClick();
+		
+		
+		WebElement getTextElem = WaitXpath("//span[@class='fontBig ng-binding']");
+		actual = getTextElem.getText();
+		expected = "Malik Ajay";
+		Assert.assertEquals(actual, expected,"Add Customer Insuccessful.");
 	}
 
 	@Test(priority = 3)
 	public void DepositCashWithdraw() {
-
-		GoToCustomerLogin();
+		//span[@class='error ng-binding']
+		//GoToCustomerLogin();
 
 		WebElement depositBut = WaitXpath("//button[@ng-click='deposit()']");
 		ActionsClick(depositBut);
@@ -167,16 +203,28 @@ public class Lab6 {
 
 		WebElement withdrawAmountButton = WaitXpath("//button[text()='Withdraw']");
 		ActionsClick(withdrawAmountButton);
+		
+		WebElement getTextElem = WaitXpath("//span[@class='error ng-binding']");
+		actual = getTextElem.getText();
+		expected = "Transaction successful";
+		Assert.assertEquals(actual, expected,"Withdraw Cash Insuccessful.");
+		
 	}
 
 	@Test(priority = 4)
 	public void Transactions() {
 
-		DepositCashWithdraw();
+		//DepositCashWithdraw();
 
 		WebElement transactionsbut = WaitXpath("//button[@ng-click='transactions()']");
 		ActionsClick(transactionsbut);
-
+		
+		WebElement getTextElem = WaitXpath("//button[@ng-click='reset()']");
+		String actual = getTextElem.getText();
+		//String actual = driver.findElement(By.xpath("//td[text()='Debit']")).getText();
+		String expected = "Reset";
+		Assert.assertEquals(actual, expected,"Transactions Insuccessful.");
+		
 		WebElement startDateTime = WaitXpath("//input[@id='start']");
 		startDateTime.sendKeys("2022-08-15T21:33:44");
 		WebElement endDateTime = WaitXpath("//input[@id='end']");
@@ -186,19 +234,26 @@ public class Lab6 {
 	@Test(priority = 5)
 	public void ResetTransactionsLogout() {
 
-		Transactions();
+		//Transactions();
 
 		WebElement resetBut = WaitXpath("//button[@ng-click='reset()']");
 		ActionsClick(resetBut);
 
 		WebElement logoutBut = WaitXpath("//button[@class='btn logout']");
 		ActionsClick(logoutBut);
+		
+		WebElement getTextElem = WaitXpath("//label[text()='Your Name :']");
+		actual = getTextElem.getText();
+		//actual = driver.findElement(By.xpath("//label[text()='Your Name :']")).getText();
+		expected = "Your Name :";
+		Assert.assertEquals(actual, expected,"Logout Insuccessful.");
+		
 	}
 
 	@Test(priority = 6)
-	public void ManagerLoginDeleteCustomer() {
+	public void ManagerLoginDeleteCustomer(){
 
-		ResetTransactionsLogout();
+		//ResetTransactionsLogout();
 
 		HomeButtonClick();
 
@@ -210,6 +265,12 @@ public class Lab6 {
 
 		WebElement delCust = WaitXpath("//input[starts-with(@class,'form-control')]");
 		delCust.sendKeys("Malik");
+		
+		
+		WebElement getTextElem = WaitXpath("//td[text()='Malik']");
+		actual = getTextElem.getText();
+		expected = "Malik";
+		Assert.assertEquals(actual, expected,"Search Customer Insuccessful.");
 
 		WebElement delCustBut = WaitXpath("//button[@ng-click='deleteCust(cust)']");
 		ActionsClick(delCustBut);
